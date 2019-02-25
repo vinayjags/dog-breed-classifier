@@ -13461,7 +13461,8 @@ There are 836 test dog images.
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Question 2:</strong> This algorithmic choice necessitates that we communicate to the user that we accept human images only when they provide a clear view of a face (otherwise, we risk having unneccessarily frustrated users!). In your opinion, is this a reasonable expectation to pose on the user? If not, can you think of a way to detect humans in images that does not necessitate an image with a clearly presented face?</p>
-<p><strong>Answer:</strong></p>
+<p><strong>Answer:</strong>
+For a NOT well-trained detection model, there is little choice of asking the user for a clear facial view or caution them that the results will not appear very accurate if the picture is not as expected. This assumption doesn't seem fair to me as it adds constraints to the system. Rather we should build our algorithm based on CNN with a training data that should include a diverse set of images from a wide variety of angles, lighting conditions, and partial obscurations. Training on only clear facial views will not allow for a great detector with this given method.</p>
 <p>We suggest the face detector from OpenCV as a potential way to detect human images in your algorithm, but you are free to explore other approaches, especially approaches that make use of deep learning :).  Please use the code cell below to design and test your own face detection algorithm.  If you decide to pursue this <em>optional</em> task, report performance on each of the datasets.</p>
 
 </div>
@@ -13774,6 +13775,13 @@ $$<p>Here, <code>nb_samples</code> is the number of samples, or number of images
 <p><img src="images/sample_cnn.png" alt="Sample CNN"></p>
 <p><strong>Question 4:</strong> Outline the steps you took to get to your final CNN architecture and your reasoning at each step.  If you chose to use the hinted architecture above, describe why you think that CNN architecture should work well for the image classification task.</p>
 <p><strong>Answer:</strong></p>
+<ul>
+<li>3 convolutional layers are created with 3 max pooling layers in between them to learn hierarchy of high level features. Max pooling layer is added to reduce the dimensionality.</li>
+<li>Filters were used 16, 32, 64 in each of the convolutional layers.</li>
+<li>Number of noders in the last fully connected layer were setup as 133 along with softmax activation function to obtain probabilities of the prediction.</li>
+<li>Relu activation function was used for all other layers.</li>
+<li>We also add an Global average polling 2d layer to reduce the size by taking an average of one filter.</li>
+</ul>
 
 </div>
 </div>
@@ -14386,8 +14394,11 @@ test_{network} = bottleneck_features['test']</code></pre>
 
 </code></pre>
 <p><strong>Question 5:</strong> Outline the steps you took to get to your final CNN architecture and your reasoning at each step.  Describe why you think the architecture is suitable for the current problem.</p>
-<p><strong>Answer:</strong> 
-I have used Transfer learning using the Resnet50 model. I have frozen the pre-trained network and added a dense layer to classify our dog breeds. Added a dense layer with "relu" activation and dropout of 0.4 to learn new features of the dogs.</p>
+<p><strong>Answer:</strong></p>
+<ul>
+<li>I have used Transfer learning using the Resnet50 model. I have frozen the pre-trained network and added a dense layer to classify our dog breeds. Added a dense layer with "relu" activation and dropout of 0.4 to learn new features of the dogs.</li>
+<li>Resnet50 is a type of pre-trained Imagenet CNN. It's already pre-trained with a very big data set of images. What we add here are 4 layers which specifically get trained for our problem. Since the pre-trained CNN is already in place to identify different images categories, our training to a specific 133 categories of dog would also work with Resnet50.</li>
+</ul>
 
 </div>
 </div>
